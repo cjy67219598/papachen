@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "server": "node server.js",
+    "server-dev": "node server.js",
     "webpack-dev": "webpack --config webpack.config.js --progress --display-modules --colors --display-reasons --watch",
     "webpack-prod": "webpack --config webpack.prod.config.js --progress --display-modules --colors --display-reasons -p"
   },
