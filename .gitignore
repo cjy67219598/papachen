@@ -1,4 +1,5 @@
 /.idea/*
-/node_module/*
+/node_modules
 /dev/*
 /dist/*
+npm-debug.log*
