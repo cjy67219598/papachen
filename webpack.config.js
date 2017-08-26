@@ -30,6 +30,14 @@ module.exports = {
                 }
             }]
         },{
+            test: /iview.src.*?js$/,
+            use:[{
+                loader: "babel-loader",
+                options:{
+                    presets:["es2015"]
+                }
+            }]
+        },{
             test: /\.less$/,
             use: [{
                 loader:"style-loader"
