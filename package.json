@@ -31,7 +31,9 @@
     "webpack": "^3.4.1"
   },
   "dependencies": {
+    "bluebird": "^3.5.0",
     "iview": "^2.2.0",
+    "jquery": "^3.2.1",
     "vue": "^2.4.2",
     "vue-router": "^2.7.0"
   }
