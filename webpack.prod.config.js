@@ -6,7 +6,7 @@ module.exports = {
         index:path.resolve(__dirname,"src/main.js")
     },
     output:{
-        path:path.resolve(__dirname,"dist/javascript"),
+        path:path.resolve(__dirname,"dist"),
         filename:"[name].js"
     },
     resolve: {
@@ -16,7 +16,7 @@ module.exports = {
         }
     },
     module:{
-        loaders: [{
+        rules: [{
             test:/\.vue$/,
             use:[{
                 loader:"vue-loader"
@@ -25,18 +25,12 @@ module.exports = {
             test: /\.js$/,
             exclude:/node_modules/,    //排除目录
             use:[{
-                loader: "babel-loader",
-                options:{
-                    presets:["es2015"]
-                }
+                loader: "babel-loader"
             }]
         },{
             test: /iview.src.*?js$/,
             use:[{
-                loader: "babel-loader",
-                options:{
-                    presets:["es2015"]
-                }
+                loader: "babel-loader"
             }]
         },{
             test: /\.less$/,
@@ -50,11 +44,7 @@ module.exports = {
             },{
                 loader:"postcss-loader"
             },{
-                loader:"less-loader",
-                options:{
-                    strictMath: true,
-                    noIeCompat: true
-                }
+                loader:"less-loader"
             }]
         },{
             test: /\.css$/,
@@ -71,7 +61,7 @@ module.exports = {
             use:[{
                 loader: "file-loader",
                 options:{
-                    outputPath:"../files/",  //相对于js的路径
+                    outputPath:"./files/",  //相对于js的路径
                     name:"[name].[hash].[ext]"
                 }
             }]
@@ -80,7 +70,7 @@ module.exports = {
             use:[{
                 loader: "file-loader",
                 options:{
-                    outputPath:"../files/",  //相对于js的路径
+                    outputPath:"./files/",  //相对于js的路径
                     name:"[name].[hash].[ext]"
                 }
             }]
@@ -89,7 +79,7 @@ module.exports = {
             use:[{
                 loader: "file-loader",
                 options:{
-                    outputPath:"../files/",  //相对于js的路径
+                    outputPath:"./files/",  //相对于js的路径
                     name:"[name].[hash].[ext]"
                 }
             }]
