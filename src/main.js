@@ -23,7 +23,7 @@ router.beforeEach((to, from, next) => {
 router.afterEach(route => {
 
 });
-let app = new Vue({
+new Vue({
     el:"#app",
     router:router,
     template:"<my-app></my-app>",

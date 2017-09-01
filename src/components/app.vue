@@ -1,6 +1,6 @@
 <template>
     <div class="index">
-        <Menu mode="horizontal" theme="dark" active-name="home" @on-select="menu">
+        <Menu mode="horizontal" theme="dark" :active-name="activeName" @on-select="menu">
             <MenuItem name="home">
                 <Icon type="home"></Icon>
                 首页
@@ -19,17 +19,19 @@
             </MenuItem>
             <div class="index-rt">
                 <Button type="text">登录</Button>
-                <Button type="text">注册</Button>
+                <router-link to="/register">
+                    <Button type="text">注册</Button>
+                </router-link>
             </div>
         </Menu>
-        <router-view></router-view>
+        <router-view class="main-view"></router-view>
     </div>
 </template>
 <script>
     export default {
         data(){
             return {
-
+                activeName:"home"
             }
         },
         methods:{
@@ -39,8 +41,15 @@
                 });
             }
         },
+        watch:{
+          $route(to,fro){
+              this.$nextTick(() => {
+                  this.activeName = to.name;
+              });
+          }
+        },
         mounted(){
-
+            this.activeName = this.$route.name;
         }
     }
 </script>
