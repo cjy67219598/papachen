@@ -91,6 +91,7 @@ module.exports = {
             }]
         }]
     },
+    devtool:"#eval-source-map",  //显示sourceMap
     plugins: [
         new HtmlWebpackPlugin({
             filename:path.resolve(__dirname,"dev/index.html"),
