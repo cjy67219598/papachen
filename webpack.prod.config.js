@@ -91,11 +91,6 @@ module.exports = {
             template:path.resolve(__dirname,"src/index.html"),
             inject: true
         }),
-        new webpack.DefinePlugin({
-            "process.env": {
-                NODE_ENV: "production"
-            }
-        }),
         new webpack.optimize.UglifyJsPlugin({ //js压缩
             compress:{
                 warnings: true,
