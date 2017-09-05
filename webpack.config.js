@@ -1,7 +1,7 @@
 let path = require("path");
 let HtmlWebpackPlugin = require("html-webpack-plugin");
 let webpack = require("webpack");
-let isProd = process.env.NODE_ENV === "production";
+let isProd = process.env.NODE_ENV === "production";//是否为生产环境
 let source = isProd ? "dist" : "dev";
 let config = {
     entry:{

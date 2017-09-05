@@ -1,8 +1,8 @@
 <template>
     <div class="register">
         <Form ref="form" :model="form" :rules="rules" :label-width="80" class="form">
-            <FormItem prop="user" label="用户名">
-                <Input v-model="form.user" placeholder="请输入用户名">
+            <FormItem prop="username" label="用户名">
+                <Input v-model.trim="form.username" placeholder="请输入用户名">
                 </Input>
             </FormItem>
             <FormItem prop="password" label="密码">
@@ -14,19 +14,22 @@
                 </Input>
             </FormItem>
             <FormItem prop="nickname" label="昵称">
-                <Input v-model="form.nickname" placeholder="请输入昵称">
+                <Input v-model.trim="form.nickname" placeholder="请输入昵称">
                 </Input>
             </FormItem>
             <FormItem prop="tel" label="手机">
-                <Input v-model="form.tel" placeholder="请输入手机号">
+                <Input v-model.trim="form.tel" placeholder="请输入手机号">
                 </Input>
             </FormItem>
             <FormItem prop="email" label="邮箱">
-                <Input v-model="form.email" placeholder="请输入邮箱">
+                <Input v-model.trim="form.email" placeholder="请输入邮箱">
                 </Input>
             </FormItem>
             <div class="text-center">
-                <Button type="primary" @click.native="handleSubmit('form')">提交</Button>
+                <Button type="primary" :loading="loading" @click.native="handleSubmit('form')">
+                    <span v-if="!loading">提交</span>
+                    <span v-else>Loading...</span>
+                </Button>
             </div>
         </Form>
     </div>
@@ -36,8 +39,9 @@
         data(){
             let _this = this;
             return {
+                loading:false,
                 form:{
-                    user:"",
+                    username:"",
                     password:"",
                     rePassword:"",
                     nickname:"",
@@ -46,15 +50,23 @@
                     introduction:""
                 },
                 rules:{
-                    user:[{//用户名验证
+                    username:[{//用户名验证
                         required:true,
-                        message:"请填写用户名",
-                        trigger:"blur",
-
+                        validator(rule, value, callback, source, options){
+                            if(!/\S/.test(value)) return callback("请输入用户名");
+                            _this.papa.post("users/exist",{
+                                username:value
+                            }).then(() => {
+                                callback();
+                            }).catch(() => {
+                                callback(new Error("用户名已存在！"));
+                            });
+                        },
+                        trigger:"blur"
                     },{
                         validator(rule, value, callback, source, options){
                             if(/^[a-zA-z][a-zA-Z0-9_]{4,14}$/.test(value)) return callback();
-                            return callback(new Error("用户名必须字母开头，包含字母、数字、下划线，5-15位"));
+                            callback(new Error("必须字母开头，允许字母、数字、下划线，5-15位"));
                         }
                     }],
                     password:[{//密码验证
@@ -106,9 +118,18 @@
             handleSubmit(name) {
                 this.$refs[name].validate((valid) => {
                     if (valid) {
-                        this.$Message.success('提交成功!');
-                    } else {
-                        this.$Message.error('表单验证失败!');
+                        let obj = {}
+                        for(let i in this.form){
+                            if(this.form[i] !== "") obj[i] = this.form[i];
+                        }
+                        this.loading = true;
+                        this.papa.post("users/register",obj).then(data => {
+                            this.papa.tip(data);
+                        }).catch(() => {
+
+                        }).finally(() => {
+                            this.loading = false;
+                        });
                     }
                 });
             }
