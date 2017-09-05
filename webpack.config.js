@@ -1,11 +1,14 @@
 let path = require("path");
 let HtmlWebpackPlugin = require("html-webpack-plugin");
-module.exports = {
+let webpack = require("webpack");
+let isProd = process.env.NODE_ENV === "production";
+let source = isProd ? "dist" : "dev";
+let config = {
     entry:{
         index:path.resolve(__dirname,"src/main.js")
     },
     output:{
-        path:path.resolve(__dirname,"dev"),
+        path:path.resolve(__dirname,source),
         filename:"[name].js"
     },
     resolve: {
@@ -44,12 +47,13 @@ module.exports = {
             },{
                 loader:"css-loader",
                 options:{
-                    sourceMap:true //是否显示路径
+                    sourceMap:!isProd, //是否显示路径
+                    minimize:isProd  //是否压缩css
                 }
             },{
                 loader:"less-loader",
                 options:{
-                    sourceMap:true //是否显示路径
+                    sourceMap:!isProd //是否显示路径
                 }
             }]
         },{
@@ -59,7 +63,7 @@ module.exports = {
             },{
                 loader:"css-loader",
                 options:{
-                    sourceMap:true //是否显示路径
+                    sourceMap:!isProd //是否显示路径
                 }
             }]
         },{
@@ -94,9 +98,21 @@ module.exports = {
     devtool:"#eval-source-map",  //显示sourceMap
     plugins: [
         new HtmlWebpackPlugin({
-            filename:path.resolve(__dirname,"dev/index.html"),
+            filename:path.resolve(__dirname,source + "/index.html"),
             template:path.resolve(__dirname,"src/index.html"),
             inject: true
+        }),
+        new webpack.optimize.UglifyJsPlugin({ //js压缩
+            compress:{
+                warnings: true,
+                drop_debugger: true,
+                drop_console: true
+            }
         })
     ]
 }
+if(isProd){
+    delete config.devtool;
+    config.plugins.splice(1,1);
+}
+module.exports = config;

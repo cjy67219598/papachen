@@ -6,9 +6,9 @@
   "scripts": {
     "server-dev": "node server-dev.js",
     "webpack-dev": "webpack --config webpack.config.js --progress --display-modules --colors --display-reasons --watch",
-    "webpack-prod": "webpack --config webpack.prod.config.js --progress --display-modules --colors --display-reasons -p"
+    "webpack-prod": "set NODE_ENV=production&& webpack --config webpack.config.js --progress --display-modules --colors --display-reasons -p"
   },
-  "author": "Chen",
+  "author": "chen",
   "license": "ISC",
   "devDependencies": {
     "autoprefixer": "^7.1.2",
