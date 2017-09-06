@@ -5,11 +5,11 @@ import App from "./components/app.vue";
 import routes from "./routes/routes";
 import iView from "iview";
 import bluebird from "bluebird";
-import business from "./business";
+import utils from "./utils";
 window.Promise = bluebird;
 Vue.use(VueRouter);
 Vue.use(iView);
-Vue.prototype.papa = business;
+Vue.prototype.papa = utils;
 let router = new VueRouter({
     routes:routes
 });

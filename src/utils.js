@@ -1,7 +1,7 @@
 /**
  * Created by Administrator on 2017/8/30.
  */
-let baseUrl = "http://localhost:3000/";
+let baseUrl = "/";
 import $ from "jquery";
 import iView from "iview";
 export default {
@@ -29,6 +29,27 @@ export default {
                         iView.LoadingBar.finish();
                         resolve(data);
                     }
+                },
+                error(err){
+                    iView.LoadingBar.error();
+                    iView.Message.error({
+                        content:"网络出错"
+                    });
+                    reject(err);
+                }
+            });
+        });
+    },
+    postNoErr(url,data){
+        iView.LoadingBar.start();
+        return new Promise((resolve,reject) => {
+            $.ajax({
+                method:"post",
+                url:baseUrl + url,
+                data:data,
+                success(data){
+                    iView.LoadingBar.finish();
+                    resolve(data);
                 },
                 error(err){
                     iView.LoadingBar.error();

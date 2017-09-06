@@ -4,7 +4,6 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "server-dev": "node server-dev.js",
     "webpack-dev": "webpack --config webpack.config.js --progress --display-modules --colors --display-reasons --watch",
     "webpack-prod": "set NODE_ENV=production&& webpack --config webpack.config.js --progress --display-modules --colors --display-reasons -p"
   },
@@ -32,7 +31,7 @@
   },
   "dependencies": {
     "bluebird": "^3.5.0",
-    "iview": "^2.2.0",
+    "iview": "^2.3.0",
     "jquery": "^3.2.1",
     "vue": "^2.4.2",
     "vue-router": "^2.7.0"

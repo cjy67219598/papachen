@@ -1,0 +1,31 @@
+.personal{
+  display:flex;
+  .head-box{
+    text-align:center;
+    padding:10px 0;
+    .person-name{
+      display:inline-block;
+      padding:5px 0;
+      width:100%;
+    }
+  }
+  .head{
+    height:100px;
+    width:100px;
+    overflow:hidden;
+    border:1px solid #d9d9d9;
+    border-radius:10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all .2s;
+    &:hover{
+      border:1px solid @primary-color;
+      box-shadow: 2px 2px 2px #888888;
+      cursor:pointer;
+    }
+    img{
+      width:100%;
+    }
+  }
+}

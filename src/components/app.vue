@@ -1,6 +1,6 @@
 <template>
     <div class="index">
-        <Menu mode="horizontal" theme="dark" :active-name="activeName" @on-select="menu">
+        <Menu mode="horizontal" theme="primary" :active-name="activeName" @on-select="menu">
             <MenuItem name="home">
                 <Icon type="home" size="18"></Icon>
                 首页
@@ -13,21 +13,24 @@
                 <Icon type="ios-paw" size="18"></Icon>
                 收藏
             </MenuItem>
-            <MenuItem name="4">
+            <MenuItem name="personal">
                 <Icon type="person" size="18"></Icon>
                 我的
             </MenuItem>
-            <div class="index-rt">
+            <div class="index-rt" v-if="!userInfo.isLogin">
                 <Button type="text" @click.native="login()">登录</Button>
                 <router-link to="/register">
                     <Button type="text">注册</Button>
                 </router-link>
             </div>
-            <div class="index-rt">
-                <Avatar class="user-head" icon="person"/>
+            <div class="index-rt" v-if="userInfo.isLogin" @click="$router.push({name:'personal'})">
+                <Avatar v-if="!userInfo.headImg" class="user-head" icon="person" size="large" />
+                <Avatar v-if="userInfo.headImg" class="user-head" :src="userInfo.headImg" size="large" />
+                <span class="user-name">{{userInfo.nickname}}</span>
             </div>
         </Menu>
-        <router-view class="main-view" @login.native="login()"></router-view>
+        <router-view class="main-view" @login="login()" :user="userInfo" @on-user="isLogin()"></router-view>
+        <BackTop></BackTop>
         <Modal v-model="modal1" :closable="false" width="300">
             <div slot="header">
                 <Icon type="person" size="16"></Icon>
@@ -37,13 +40,13 @@
                 <FormItem prop="username">
                     <Input type="text" v-model="form.username" placeholder="请输入用户名"
                            @keydown.enter.native="loginSubmit('form')">
-                    <Icon type="ios-person-outline" slot="prepend"></Icon>
+                        <Icon type="ios-person-outline" slot="prepend"></Icon>
                     </Input>
                 </FormItem>
                 <FormItem prop="password">
                     <Input type="password" v-model="form.password" placeholder="请输入密码"
                            @keydown.enter.native="loginSubmit('form')">
-                    <Icon type="ios-locked-outline" slot="prepend"></Icon>
+                        <Icon type="ios-locked-outline" slot="prepend"></Icon>
                     </Input>
                 </FormItem>
             </Form>
@@ -68,7 +71,8 @@
                 },
                 userInfo: {
                     nickname: "",
-                    headImg: ""
+                    headImg: "",
+                    isLogin:true
                 },
                 loading: false,
                 rules: {
@@ -111,6 +115,7 @@
                         this.papa.post("users/login", this.form).then((data) => {
                             this.papa.tip(data);
                             this.modal1 = false;
+                            this.isLogin();
                         }).catch(() => {
 
                         }).finally(() => {
@@ -118,10 +123,24 @@
                         });
                     }
                 });
+            },
+            isLogin(){
+                this.papa.postNoErr("users/isLogin",{}).then(data => {
+                    if(data){
+                        data.data.isLogin = true;
+                        data.data.headImg += "?_=" + new Date().getTime();
+                        this.userInfo = data.data;
+                    }else{
+                        this.userInfo.isLogin = false;
+                    }
+                }).catch(() => {
+                    this.userInfo.isLogin = false;
+                });
             }
         },
         watch: {
             $route(to, fro) {
+                if(to.name !== "home") return;
                 this.$nextTick(() => {
                     this.activeName = to.name;
                 });
@@ -129,6 +148,7 @@
         },
         mounted() {
             this.activeName = this.$route.name;
+            this.isLogin();
         }
     }
 </script>

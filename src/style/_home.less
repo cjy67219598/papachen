@@ -1,12 +1,28 @@
 .index-rt{
   display:inline-block;
   float:right;
+  padding-right:15px;
   .ivu-btn-text{
     color:#fff;
   }
   .user-head{
-    background:@primary-color;
     vertical-align:middle;
+    transition: all .2s;
+    &:hover{
+      cursor:pointer;
+      transform:scale(1.1,1.1);
+    }
+  }
+  .user-name{
+    display:inline-block;
+    vertical-align:middle;
+    color:#fff;
+    font-size:14px;
+    padding:0 10px;
+    &:hover{
+      cursor:pointer;
+      text-decoration: underline;
+    }
   }
 }
 .main-view{
@@ -16,4 +32,16 @@
 }
 .text-center{
   text-align: center;
+}
+.index{
+  .ivu-menu-primary.ivu-menu-horizontal{
+    .ivu-menu-item-active{
+      background:darken(@primary-color,10%);
+    }
+    .ivu-menu-item{
+      &:hover{
+        background:darken(@primary-color,10%);
+      }
+    }
+  }
 }
