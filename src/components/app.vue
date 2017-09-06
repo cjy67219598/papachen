@@ -128,7 +128,7 @@
                 this.papa.postNoErr("users/isLogin",{}).then(data => {
                     if(data){
                         data.data.isLogin = true;
-                        data.data.headImg += "?_=" + new Date().getTime();
+                        data.data.headImg && (data.data.headImg += "?_=" + new Date().getTime());
                         this.userInfo = data.data;
                     }else{
                         this.userInfo.isLogin = false;
