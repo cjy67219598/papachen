@@ -1,7 +1,7 @@
 {
   "name": "papachen",
   "version": "1.0.0",
-  "description": "",
+  "description": "Personal blog",
   "main": "index.js",
   "scripts": {
     "webpack-dev": "webpack --config webpack.config.js --progress --display-modules --colors --display-reasons --watch",
