@@ -51,6 +51,8 @@ let config = {
                     minimize:isProd  //是否压缩css
                 }
             },{
+                loader:"postcss-loader"
+            },{
                 loader:"less-loader",
                 options:{
                     sourceMap:!isProd //是否显示路径
@@ -65,6 +67,8 @@ let config = {
                 options:{
                     sourceMap:!isProd //是否显示路径
                 }
+            },{
+                loader:"postcss-loader"
             }]
         },{
             test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
@@ -114,5 +118,8 @@ let config = {
 if(isProd){
     delete config.devtool;
     config.plugins.splice(1,1);
+}else{
+    config.module.rules[3].use.splice(2,1);
+    config.module.rules[4].use.splice(2,1);
 }
 module.exports = config;

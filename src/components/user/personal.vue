@@ -13,7 +13,7 @@
                 <span class="person-name">{{user.nickname}}</span>
             </div>
             <MenuGroup title="个人中心">
-                <MenuItem name="1">
+                <MenuItem name="myArticlesList">
                     <Icon type="document-text"></Icon>
                     我的博客
                 </MenuItem>
@@ -38,9 +38,7 @@
                 </MenuItem>
             </MenuGroup>
         </Menu>
-        <div>
-            123
-        </div>
+        <router-view class="personal-children"></router-view>
     </div>
 </template>
 <script>
@@ -67,7 +65,7 @@
                     });
                     _this.$Loading.error();
                 },
-                activeName:"1"
+                activeName:"myArticlesList"
             }
         },
         methods:{

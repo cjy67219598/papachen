@@ -18,6 +18,10 @@ router.beforeEach((to, from, next) => {
         next({
             name:"home"
         });
+    }else if(to.name === "personal"){
+        next({
+            name:"myArticlesList"
+        });
     }else{
         next(true);
     }
