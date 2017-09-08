@@ -4,8 +4,8 @@
   "description": "Personal blog",
   "main": "index.js",
   "scripts": {
-    "webpack-dev": "webpack --config webpack.config.js --progress --display-modules --colors --display-reasons --watch",
-    "webpack-prod": "set NODE_ENV=production&& webpack --config webpack.config.js --progress --display-modules --colors --display-reasons -p"
+    "dev": "webpack --config webpack.config.js --progress --display-modules --colors --display-reasons --watch",
+    "prod": "set NODE_ENV=production&& webpack --config webpack.config.js --progress --display-modules --colors --display-reasons -p"
   },
   "author": "chen",
   "license": "ISC",

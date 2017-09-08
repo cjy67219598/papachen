@@ -18,8 +18,8 @@
             <div class="label">内容</div>
             <div class="editor" ref="article"></div>
         </div>
-        <div class="text-center">
-            <Button type="primary" :loading="loading" @click.native="handleSubmit('form')">
+        <div class="text-center save">
+            <Button type="primary" :loading="loading" @click.native="handleSubmit('form')" size="large" long>
                 <span v-if="!loading">保存</span>
                 <span v-else>Loading...</span>
             </Button>
@@ -90,10 +90,24 @@
                         });
                     }
                 });
+            },
+            getDetail(){
+                if(!this.$route.query.id) return;
+                this.papa.post("index/detail",{
+                    id:this.$route.query.id
+                }).then(data => {
+                    this.form.title = data.data.title;
+                    this.form.intro = data.data.intro;
+                    this.form.hidden = data.data.hidden;
+                    this.wangEditor.txt.html(data.data.content);
+                }).catch(() => {
+
+                });
             }
         },
         mounted(){
             this.editor();
+            this.getDetail();
         }
     }
 </script>
