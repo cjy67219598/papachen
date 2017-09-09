@@ -62,6 +62,12 @@
                 this.wangEditor = new Wang(this.$refs["article"]);
                 this.wangEditor.customConfig.uploadImgServer = "/article/upload";
                 this.wangEditor.customConfig.uploadFileName = "image";
+                this.wangEditor.customConfig.customAlert =  info => {
+                    // info 是需要提示的内容
+                    this.$Message.error({
+                        content:info
+                    })
+                };
                 this.wangEditor.create();
             },
             handleSubmit(name){
@@ -73,7 +79,7 @@
                             });
                         }
                         this.loading = true;
-                        let obj = {}
+                        let obj = {};
                         obj.content = this.wangEditor.txt.html();
                         for(let i in this.form){
                             this.form[i] !== "" && (obj[i] = this.form[i]);
@@ -93,6 +99,7 @@
             },
             getDetail(){
                 if(!this.$route.query.id) return;
+                this.form.id = this.$route.query.id;
                 this.papa.post("index/detail",{
                     id:this.$route.query.id
                 }).then(data => {

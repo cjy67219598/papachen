@@ -1,0 +1,21 @@
+<template>
+    <div class="empty">
+        <p><Icon type="heart-broken" size="16"></Icon>&nbsp;{{msg || "抱歉，没有相关内容！"}}</p>
+    </div>
+</template>
+<script>
+    export default {
+        props:["msg"],
+        data(){
+            return {
+
+            }
+        },
+        methods:{
+
+        },
+        mounted(){
+
+        }
+    }
+</script>
