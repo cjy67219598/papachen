@@ -6,15 +6,15 @@ import routes from "./routes/routes";
 import iView from "iview";
 import bluebird from "bluebird";
 import utils from "./utils";
-import empty from "./components/include/empty.vue";
+import com from "./components/com";
 window.Promise = bluebird;
 Vue.use(VueRouter);
 Vue.use(iView);
+Vue.use(com);
 Vue.prototype.papa = utils;
 let router = new VueRouter({
     routes:routes
 });
-Vue.component("papa-empty",empty);
 router.beforeEach((to, from, next) => {
     if(!to.name){
         next({

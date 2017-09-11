@@ -30,6 +30,7 @@
   }
   .personal-children{
     padding:20px 20px;
+    width: 800px;
   }
   .article{
     padding-left:50px;
@@ -41,36 +42,57 @@
         padding-right:12px;
         text-align:right;
       }
+      .editor{
+        width:590px;
+      }
     }
     .save{
       padding:0 200px 0 300px;
     }
   }
-  .my-articles-list{
-    .add{
-      padding:10px 0;
-    }
-    .list{
-      width:865px;
-      .item{
-        margin:5px 0;
-        & > p{
-          .elli();
-          padding:5px 50px 5px 0;
-        }
-        .title{
-          font-size:16px;
-          font-weight: bold;
-        }
-        .intro,.time{
-          font-size:14px;
-          color:#666;
-        }
+}
+.my-articles-list{
+  .add{
+    padding:10px 0;
+  }
+  .list{
+    .item{
+      margin:5px 0;
+      p{
+        .elli();
+      }
+      .title{
+        font-size:16px;
+        font-weight: bold;
+        padding:5px 50px 5px 0;
+      }
+      .intro,.time{
+        font-size:14px;
+        color:#666;
+      }
+      .author{
+        display:inline-block;
+        float:right;
       }
     }
-    .ivu-page{
-      padding:10px 0;
-      text-align:right;
-    }
+  }
+  .ivu-page{
+    padding:10px 0;
+    text-align:right;
+  }
+}
+.lastest-item{
+  white-space: nowrap;
+  padding:0 0 5px 0;
+  a{
+    width:70%;
+    display:inline-block;
+    .elli();
+  }
+  span{
+    width:30%;
+    display:inline-block;
+    .elli();
+    text-align:right;
   }
 }

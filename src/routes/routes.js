@@ -1,4 +1,5 @@
 import home from "../components/home/home.vue";
+import hot from "../components/home/hot.vue";
 import register from "../components/user/register.vue";
 import personal from "../components/user/personal.vue";
 import article from "../components/user/article.vue";
@@ -7,6 +8,10 @@ let router = [{
     path:"/home",
     component:home,
     name:"home"
+},{
+    path:"/hot",
+    component:hot,
+    name:"hot"
 },{
     path:"/register",
     component:register,

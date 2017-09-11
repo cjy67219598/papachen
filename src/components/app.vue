@@ -5,7 +5,7 @@
                 <Icon type="home" size="18"></Icon>
                 首页
             </MenuItem>
-            <MenuItem name="2">
+            <MenuItem name="hot">
                 <Icon type="thumbsup" size="18"></Icon>
                 热门
             </MenuItem>
