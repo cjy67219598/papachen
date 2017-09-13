@@ -17,6 +17,12 @@
                 <Input v-model.trim="form.nickname" placeholder="请输入昵称">
                 </Input>
             </FormItem>
+            <FormItem label="性别">
+                <RadioGroup v-model="form.sex">
+                    <Radio :label="1">男</Radio>
+                    <Radio :label="0">女</Radio>
+                </RadioGroup>
+            </FormItem>
             <FormItem prop="tel" label="手机">
                 <Input v-model.trim="form.tel" placeholder="请输入手机号">
                 </Input>
@@ -47,7 +53,8 @@
                     nickname:"",
                     email:"",
                     tel:"",
-                    introduction:""
+                    introduction:"",
+                    sex:1
                 },
                 rules:{
                     username:[{//用户名验证

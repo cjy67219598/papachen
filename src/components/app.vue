@@ -126,29 +126,48 @@
             },
             isLogin(){
                 this.papa.postNoErr("users/isLogin",{}).then(data => {
-                    if(data){
+                    if(data.msg.status === 1){
                         data.data.isLogin = true;
+                        this.$parent.isLogin = true;
                         data.data.headImg && (data.data.headImg += "?_=" + new Date().getTime());
                         this.userInfo = data.data;
                     }else{
                         this.userInfo.isLogin = false;
+                        this.$parent.isLogin = false;
+                        if(this.$route.matched.some(record => record.meta.auth)){
+                            this.$router.push({
+                                name:"home"
+                            });
+                            this.login();
+                        }
                     }
                 }).catch(() => {
                     this.userInfo.isLogin = false;
+                    this.$parent.isLogin = false;
+                });
+            },
+            routeInit(to){
+                this.$nextTick(() => {
+                    if(to.matched.some(record => record.meta.home)){
+                        if(/personal/.test(to.path)){
+                            this.activeName = "personal";
+                        }else{
+                            this.activeName = to.name;
+                        }
+                    }else{
+                        this.activeName = "";
+                    }
                 });
             }
         },
         watch: {
             $route(to, fro) {
-                if(to.name !== "home") return;
-                this.$nextTick(() => {
-                    this.activeName = to.name;
-                });
+                this.routeInit(to);
             }
         },
         mounted() {
-            this.activeName = this.$route.name;
             this.isLogin();
+            this.routeInit(this.$route);
         }
     }
 </script>

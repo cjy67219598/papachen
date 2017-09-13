@@ -67,6 +67,7 @@ export default {
         });
     },
     time(t,type){
+        if(!t) return "";
         t = new Date(Number(t));
         let year = t.getFullYear();
         let month = t.getMonth() + 1 < 10 ? "0" + (t.getMonth() + 1) : t.getMonth() + 1;

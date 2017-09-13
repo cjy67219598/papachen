@@ -6,13 +6,13 @@
                     <div class="list">
                         <Card class="item" v-for="(val,key) in list.data" :key="key">
                             <p class="title">
-                                <router-link to="/detail">{{val.title}}</router-link>
+                                <router-link :to="'/detail?id=' + val._id">{{val.title}}</router-link>
                             </p>
                             <p class="intro">
                                 <span>{{val.intro}}</span>
                             </p>
                             <p class="time">
-                                <span>{{papa.time(val.updateTime,1)}}</span>
+                                <Icon type="ios-clock-outline"></Icon>&nbsp;<span>{{papa.time(val.updateTime,1)}}</span>
                                 &nbsp;
                                 <span class="author">作者：{{val.user.nickname}}</span>
                             </p>
@@ -32,13 +32,14 @@
                     <Icon type="document"></Icon>&nbsp;
                     最新博客
                 </p>
-                <a href="#" slot="extra" @click.prevent="changeLimit">
+                <a href="#" slot="extra" @click.prevent="changeNext()">
                     <Icon type="ios-loop-strong"></Icon>
                     换一换
                 </a>
+                <papa-empty v-if="list2.page.count === 0"></papa-empty>
                 <ul>
                     <li v-for="(val,key) in list2.data" class="lastest-item">
-                        <a :href="val.url" :title="val.title">{{ val.title }}</a>
+                        <router-link :to="'/detail?id=' + val._id" :title="val.title">{{ val.title }}</router-link>
                         <span :title="val.nickname">
                             {{val.user.nickname}}
                         </span>
@@ -80,6 +81,9 @@
                 }).catch(() => {
 
                 });
+            },
+            changeNext(){
+
             }
         },
         mounted(){

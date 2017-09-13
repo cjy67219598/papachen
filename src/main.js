@@ -38,4 +38,4 @@ new Vue({
     components: {
         "my-app":App
     }
-});
+})
