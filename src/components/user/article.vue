@@ -19,10 +19,11 @@
             <div class="editor" ref="article"></div>
         </div>
         <div class="text-center save">
-            <Button type="primary" :loading="loading" @click.native="handleSubmit('form')" size="large" long>
+            <Button type="primary" :loading="loading" @click.native="handleSubmit('form')" size="large">
                 <span v-if="!loading">保存</span>
                 <span v-else>Loading...</span>
             </Button>
+            <Button size="large" @click.native="$router.push({name:'myArticlesList'})">取消</Button>
         </div>
     </div>
 </template>

@@ -27,6 +27,7 @@
             </div>
         </Col>
         <Col span="8" style="padding:50px 50px;">
+            <Input v-model.trim="keywords" icon="search" placeholder="请输入关键字进行搜索" style="margin:0 0 20px 0;" @keydown.native.enter="setKeywords()"></Input>
             <Card>
                 <p slot="title">
                     <Icon type="document"></Icon>&nbsp;
@@ -39,7 +40,7 @@
                 <papa-empty v-if="list2.page.count === 0"></papa-empty>
                 <ul>
                     <li v-for="(val,key) in list2.data" class="lastest-item">
-                        <router-link :to="'/detail?id=' + val._id" :title="val.title">{{ val.title }}</router-link>
+                        <router-link :to="'/detail?id=' + val._id" :title="val.title">{{val.title}}</router-link>
                         <span :title="val.nickname">
                             {{val.user.nickname}}
                         </span>
@@ -64,12 +65,17 @@
                 search:{
                     page:1,
                     size:10
-                }
+                },
+                search2:{
+                    page:1,
+                    size:10
+                },
+                keywords:""
             }
         },
         methods:{
             getHot(){
-                this.papa.post("index/hot",{}).then(data => {
+                this.papa.post("index/hot",this.search2).then(data => {
                     this.list = data;
                 }).catch(() => {
 
@@ -83,7 +89,16 @@
                 });
             },
             changeNext(){
-
+                if(this.list.page.totalPage > this.list.page.page){
+                    this.search.page ++;
+                }else{
+                    this.search.page = 1;
+                }
+                this.getLatest();
+            },
+            setKeywords(){
+                this.search2.keywords = this.keywords;
+                this.getHot();
             }
         },
         mounted(){

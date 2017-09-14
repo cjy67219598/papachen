@@ -9,7 +9,7 @@
         </div>
         <div class="list">
             <Card class="item" v-for="(val,key) in list.data" :key="key">
-                <p class="title">{{val.title}}</p>
+                <p class="title"><router-link :to="'/detail?id=' + val._id">{{val.title}}</router-link></p>
                 <p class="intro">
                     <span>{{val.intro}}</span>
                 </p>

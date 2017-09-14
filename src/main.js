@@ -16,26 +16,31 @@ let router = new VueRouter({
     routes:routes
 });
 router.beforeEach((to, from, next) => {
-    if(!to.name){
-        next({
-            name:"home"
-        });
-    }else if(to.name === "personal"){
-        next({
-            name:"myArticlesList"
-        });
+    if(app && to.matched.some(record => record.meta.auth) && !app.$children[0].userInfo.isLogin){
+        next(false);
+        app.$children[0].login();
     }else{
-        next(true);
+        if(!to.name){
+            next({
+                name:"home"
+            });
+        }else if(to.name === "personal"){
+            next({
+                name:"myArticlesList"
+            });
+        }else{
+            next(true);
+        }
     }
 });
 router.afterEach(route => {
 
 });
-new Vue({
+let app = new Vue({
     el:"#app",
     router:router,
     template:"<my-app></my-app>",
     components: {
         "my-app":App
     }
-})
+});

@@ -40,10 +40,16 @@ let router = [{
         name:"personal"
     },
     children: [{
+        meta:{
+            auth: true
+        },
         path: "article",
         component: article,
         name: "article"
     }, {
+        meta:{
+            auth: true
+        },
         path: "list",
         component: myArticlesList,
         name: "myArticlesList"

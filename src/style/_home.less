@@ -36,10 +36,15 @@
 .index{
   .ivu-menu-primary.ivu-menu-horizontal{
     .ivu-menu-item-active{
-      background:darken(@primary-color,10%);
+      background:@primary-color;
     }
     .ivu-menu-item{
       &:hover{
+        background:darken(@primary-color,10%);
+      }
+    }
+    .router-link-active{
+      .ivu-menu-item{
         background:darken(@primary-color,10%);
       }
     }

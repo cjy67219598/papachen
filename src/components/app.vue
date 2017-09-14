@@ -1,22 +1,24 @@
 <template>
     <div class="index">
-        <Menu mode="horizontal" theme="primary" :active-name="activeName" @on-select="menu">
-            <MenuItem name="home">
-                <Icon type="home" size="18"></Icon>
-                首页
-            </MenuItem>
-            <MenuItem name="hot">
-                <Icon type="thumbsup" size="18"></Icon>
-                热门
-            </MenuItem>
-            <MenuItem name="3">
-                <Icon type="ios-paw" size="18"></Icon>
-                收藏
-            </MenuItem>
-            <MenuItem name="personal">
-                <Icon type="person" size="18"></Icon>
-                我的
-            </MenuItem>
+        <Menu mode="horizontal" theme="primary" active-name="home">
+            <router-link to="/home">
+                <MenuItem name="home">
+                    <Icon type="home" size="18"></Icon>
+                    首页
+                </MenuItem>
+            </router-link>
+            <router-link to="/hot">
+                <MenuItem name="hot">
+                    <Icon type="thumbsup" size="18"></Icon>
+                    热门
+                </MenuItem>
+            </router-link>
+            <router-link to="/personal">
+                <MenuItem name="personal">
+                    <Icon type="person" size="18"></Icon>
+                    我的
+                </MenuItem>
+            </router-link>
             <div class="index-rt" v-if="!userInfo.isLogin">
                 <Button type="text" @click.native="login()">登录</Button>
                 <router-link to="/register">
@@ -100,11 +102,6 @@
             }
         },
         methods: {
-            menu(name) {
-                this.$router.push({
-                    name: name
-                });
-            },
             login() {
                 this.modal1 = true;
             },
@@ -133,7 +130,6 @@
                         this.userInfo = data.data;
                     }else{
                         this.userInfo.isLogin = false;
-                        this.$parent.isLogin = false;
                         if(this.$route.matched.some(record => record.meta.auth)){
                             this.$router.push({
                                 name:"home"
@@ -145,29 +141,10 @@
                     this.userInfo.isLogin = false;
                     this.$parent.isLogin = false;
                 });
-            },
-            routeInit(to){
-                this.$nextTick(() => {
-                    if(to.matched.some(record => record.meta.home)){
-                        if(/personal/.test(to.path)){
-                            this.activeName = "personal";
-                        }else{
-                            this.activeName = to.name;
-                        }
-                    }else{
-                        this.activeName = "";
-                    }
-                });
-            }
-        },
-        watch: {
-            $route(to, fro) {
-                this.routeInit(to);
             }
         },
         mounted() {
             this.isLogin();
-            this.routeInit(this.$route);
         }
     }
 </script>
