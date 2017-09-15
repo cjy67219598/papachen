@@ -123,15 +123,18 @@
         },
         methods:{
             handleSubmit(name) {
-                this.$refs[name].validate((valid) => {
+                this.$refs[name].validate(valid => {
                     if (valid) {
-                        let obj = {}
+                        let obj = {};
                         for(let i in this.form){
                             if(this.form[i] !== "") obj[i] = this.form[i];
                         }
                         this.loading = true;
                         this.papa.post("users/register",obj).then(data => {
                             this.papa.tip(data);
+                            this.$router.replace({
+                                name:"home"
+                            });
                         }).catch(() => {
 
                         }).finally(() => {
