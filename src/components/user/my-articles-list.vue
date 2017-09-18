@@ -18,7 +18,15 @@
                 </p>
                 <div slot="extra">
                     <Button type="text" @click.native="edit(val._id)">编辑</Button>
-                    <Button type="error" @click.native="del(val._id)">删除</Button>
+                    <Poptip
+                            confirm
+                            title="确定删除?"
+                            @on-ok="del(val.id)"
+                            ok-text="确定"
+                            cancel-text="取消"
+                            placement="left">
+                        <Button type="error">删除</Button>
+                    </Poptip>
                 </div>
             </Card>
         </div>
@@ -61,22 +69,13 @@
                 });
             },
             del(id){
-                this.$Modal.confirm({
-                    title: "警告",
-                    content: "删除后不可恢复呦~",
-                    onOk: () => {
-                        this.papa.post("article/del",{
-                            id:id
-                        }).then((data) => {
-                            this.papa.tip(data);
-                            this.getList();
-                        }).catch(() => {
+                this.papa.post("article/del",{
+                    id:id
+                }).then((data) => {
+                    this.papa.tip(data);
+                    this.getList();
+                }).catch(() => {
 
-                        });
-                    },
-                    onCancel: () => {
-
-                    }
                 });
             }
         },

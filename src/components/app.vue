@@ -26,14 +26,19 @@
                 </router-link>
             </div>
             <div class="index-rt" v-if="userInfo.isLogin" @click="$router.push({name:'personal'})">
-                <Avatar v-if="!userInfo.headImg" class="user-head" icon="person" size="large" />
-                <Avatar v-if="userInfo.headImg" class="user-head" :src="userInfo.headImg" size="large" />
+                <Poptip placement="bottom" trigger="hover">
+                    <Avatar v-if="!userInfo.headImg" class="user-head" icon="person" size="large" />
+                    <Avatar v-if="userInfo.headImg" class="user-head" :src="userInfo.headImg" size="large" />
+                    <div slot="content">
+                        <Button type="text" long style="color:#000;" @click.native="signOut()">退出登陆</Button>
+                    </div>
+                </Poptip>
                 <span class="user-name">{{userInfo.nickname}}</span>
             </div>
         </Menu>
         <router-view class="main-view" @login="login()" :user="userInfo" @on-user="isLogin()"></router-view>
         <BackTop></BackTop>
-        <Modal v-model="modal1" :closable="false" width="300">
+        <Modal v-model="modal1" :closable="true" width="300">
             <div slot="header">
                 <Icon type="person" size="16"></Icon>
                 用户登录
@@ -121,7 +126,7 @@
                     }
                 });
             },
-            isLogin(){
+            isLogin(model){
                 this.papa.postNoErr("users/isLogin",{}).then(data => {
                     if(data.msg.status === 1){
                         data.data.isLogin = true;
@@ -134,12 +139,32 @@
                             this.$router.push({
                                 name:"home"
                             });
-                            this.login();
+                            if(!model) this.login();
                         }
                     }
                 }).catch(() => {
                     this.userInfo.isLogin = false;
                     this.$parent.isLogin = false;
+                });
+            },
+            signOut(){
+                this.$Modal.confirm({
+                    title:"提示",
+                    content:"确定退出?",
+                    onOk: () => {
+                        this.out();
+                    },
+                    onCancel: () => {
+
+                    }
+                });
+            },
+            out(){
+                this.papa.post("users/signOut",{}).then(data => {
+                    this.papa.tip(data);
+                    this.isLogin(true);
+                }).catch(() => {
+
                 });
             }
         },
