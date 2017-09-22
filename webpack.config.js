@@ -3,6 +3,16 @@ let HtmlWebpackPlugin = require("html-webpack-plugin");
 let webpack = require("webpack");
 let isProd = process.env.NODE_ENV === "production";//是否为生产环境
 let source = isProd ? "dist" : "dev";
+let postcss = isProd ? [{    //是否使用postcss
+        loader:"postcss-loader"
+    }] : [];
+let jsUglify = isProd ? [new webpack.optimize.UglifyJsPlugin({ //是否压缩js
+        compress:{
+            warnings: true,
+            drop_debugger: true,
+            drop_console: true
+        }
+    })] : [];
 let config = {
     entry:{
         index:path.resolve(__dirname,"src/main.js")
@@ -50,9 +60,7 @@ let config = {
                     sourceMap:!isProd, //是否显示路径
                     minimize:isProd  //是否压缩css
                 }
-            },{
-                loader:"postcss-loader"
-            },{
+            },...postcss,{
                 loader:"less-loader",
                 options:{
                     sourceMap:!isProd //是否显示路径
@@ -67,9 +75,7 @@ let config = {
                 options:{
                     sourceMap:!isProd //是否显示路径
                 }
-            },{
-                loader:"postcss-loader"
-            }]
+            },...postcss]
         },{
             test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
             use:[{
@@ -99,27 +105,14 @@ let config = {
             }]
         }]
     },
-    devtool:"#eval-source-map",  //显示sourceMap
+    devtool:isProd ? undefined : "#eval-source-map",  //是否显示sourceMap
     plugins: [
         new HtmlWebpackPlugin({
             filename:path.resolve(__dirname,source + "/index.html"),
             template:path.resolve(__dirname,"src/index.html"),
             inject: true
         }),
-        new webpack.optimize.UglifyJsPlugin({ //js压缩
-            compress:{
-                warnings: true,
-                drop_debugger: true,
-                drop_console: true
-            }
-        })
+        ...jsUglify
     ]
-}
-if(isProd){
-    delete config.devtool;
-    config.plugins.splice(1,1);
-}else{
-    config.module.rules[3].use.splice(2,1);
-    config.module.rules[4].use.splice(2,1);
-}
+};
 module.exports = config;

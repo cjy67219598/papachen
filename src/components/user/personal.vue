@@ -17,7 +17,7 @@
                     <Icon type="document-text"></Icon>
                     我的博客
                 </MenuItem>
-                <MenuItem name="2">
+                <MenuItem name="collections">
                     <Icon type="ios-paw"></Icon>
                     我的收藏
                 </MenuItem>
@@ -65,7 +65,7 @@
                     });
                     _this.$Loading.error();
                 },
-                activeName:"myArticlesList"
+                activeName:this.$route.name
             }
         },
         methods:{

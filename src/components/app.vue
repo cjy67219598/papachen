@@ -117,7 +117,7 @@
                         this.papa.post("users/login", this.form).then((data) => {
                             this.papa.tip(data);
                             this.modal1 = false;
-                            this.isLogin();
+                            window.location.reload();
                         }).catch(() => {
 
                         }).finally(() => {
@@ -130,7 +130,6 @@
                 this.papa.postNoErr("users/isLogin",{}).then(data => {
                     if(data.msg.status === 1){
                         data.data.isLogin = true;
-                        this.$parent.isLogin = true;
                         data.data.headImg && (data.data.headImg += "?_=" + new Date().getTime());
                         this.userInfo = data.data;
                     }else{
@@ -144,7 +143,6 @@
                     }
                 }).catch(() => {
                     this.userInfo.isLogin = false;
-                    this.$parent.isLogin = false;
                 });
             },
             signOut(){
@@ -162,7 +160,7 @@
             out(){
                 this.papa.post("users/signOut",{}).then(data => {
                     this.papa.tip(data);
-                    this.isLogin(true);
+                    window.location.reload();
                 }).catch(() => {
 
                 });

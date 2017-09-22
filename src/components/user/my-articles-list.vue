@@ -21,7 +21,7 @@
                     <Poptip
                             confirm
                             title="确定删除?"
-                            @on-ok="del(val.id)"
+                            @on-ok="del(val._id)"
                             ok-text="确定"
                             cancel-text="取消"
                             placement="left">
