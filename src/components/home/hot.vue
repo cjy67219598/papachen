@@ -24,6 +24,7 @@
                     </div>
                     <papa-empty msg="抱歉，暂无数据~" v-if="list.data.length === 0"></papa-empty>
                 </div>
+                <Page :total="list.page.count" :page-size="search2.size" :current="list.page.page" show-elevator @on-change="setPage" v-if="list.page.count > search2.size"></Page>
             </div>
         </Col>
         <Col span="8" style="padding:50px 50px;">
@@ -80,6 +81,10 @@
                 }).catch(() => {
 
                 });
+            },
+            setPage(num){
+              this.search2.page = num;
+              this.getHot();
             },
             getLatest(){
                 this.papa.post("index/latest",this.search).then(data => {

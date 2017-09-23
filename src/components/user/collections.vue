@@ -67,6 +67,10 @@
             setKeywords(){
                 this.search.keywords = this.keywords;
                 this.getList();
+            },
+            setPage(num){
+                this.search.page = num;
+                this.getList();
             }
         },
         mounted(){
