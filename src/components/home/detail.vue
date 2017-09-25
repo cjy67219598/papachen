@@ -18,9 +18,21 @@
         </Card>
         <Card class="comment">
             <p slot="title">最新评论</p>
-            <papa-empty msg="抱歉，暂无数据~" v-if="comments.data.length === 0"></papa-empty>
+            <papa-empty msg="还没有人评论呦~" v-if="comments.data.length === 0"></papa-empty>
+            <div>
+                <div class="comments-list" v-for="(val,key) in comments.data">
+                    <Avatar :src="val.user.headImg" /><span class="c-time">{{val.user.nickname}}&nbsp;&nbsp;发表于：{{papa.time(val.createTime,1)}}</span>
+                    <p>{{val.content}}</p>
+                </div>
+            </div>
             <Page :total="comments.page.count" :page-size="search.size" :current="comments.page.page" show-elevator @on-change="setPage" v-if="comments.page.count > search.size"></Page>
-
+            <div class="comment-textarea">
+                <Input v-model.trim="textarea" type="textarea" :autosize="{minRows: 4,maxRows: 10}" placeholder="请输入评论内容"></Input>
+            </div>
+            <Button type="primary" @click.native="comment()" :loading="loading">
+                <span v-if="!loading">发表</span>
+                <span v-else>Loading...</span>
+            </Button>
         </Card>
     </div>
 </template>
@@ -41,9 +53,11 @@
                 search:{
                     id:this.$route.query.id,
                     page:1,
-                    size:10
+                    size:5
                 },
-                isCollected: false
+                textarea:"",
+                isCollected: false,
+                loading:false
             }
         },
         methods: {
@@ -94,6 +108,38 @@
             setPage(num){
                 this.search.page = num;
                 this.getComments();
+            },
+            comment(){
+                if(this.textarea === ""){
+                    this.$Message.info({
+                        content: "评论内容不能为空",
+                        duration: 10,
+                        closable:true
+                    });
+                    return;
+                }
+                if(this.textarea.length > 500){
+                    this.$Message.info({
+                        content: "评论字数不能超过500字",
+                        duration: 10,
+                        closable:true
+                    });
+                    return;
+                }
+                this.loading = true;
+                this.papa.post("article/comment",{
+                    id:this.$route.query.id,
+                    content:this.textarea
+                }).then(data => {
+                    this.papa.tip(data);
+                    this.textarea = "";
+                    this.search.page = 1;
+                    this.getComments();
+                }).catch(err => {
+
+                }).finally(() => {
+                    this.loading = false;
+                });
             }
         },
         mounted() {

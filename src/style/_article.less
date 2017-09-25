@@ -35,6 +35,33 @@
   }
   .comment{
     margin:20px 0 0 0;
+    .comment-textarea{
+      padding:20px 50% 10px 0;
+      border-top:1px solid #d9d9d9;
+    }
+    .comments-list{
+      padding:10px 0;
+      .ivu-avatar{
+        display:inline-block;
+        vertical-align: middle;
+      }
+      .c-time{
+        display:inline-block;
+        vertical-align: middle;
+        padding:0 0 0 20px;
+        color:#666;
+        font-size:12px;
+      }
+      p{
+        padding:10px 0;
+      }
+      &:not(:last-child){
+        border-bottom:1px dashed #d9d9d9;
+      }
+    }
+    .ivu-page{
+      text-align:center;
+    }
   }
   /* table 样式 */
   table {
