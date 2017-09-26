@@ -21,7 +21,7 @@
             <papa-empty msg="还没有人评论呦~" v-if="comments.data.length === 0"></papa-empty>
             <div>
                 <div class="comments-list" v-for="(val,key) in comments.data">
-                    <Avatar :src="val.user.headImg" /><span class="c-time">{{val.user.nickname}}&nbsp;&nbsp;发表于：{{papa.time(val.createTime,1)}}</span>
+                    <Avatar :src="val.userBy.headImg" /><span class="c-time">{{val.userBy.nickname}}&nbsp;&nbsp;发表于：{{papa.time(val.createTime,1)}}</span>
                     <p>{{val.content}}</p>
                 </div>
             </div>

@@ -21,10 +21,14 @@
                     <Icon type="ios-paw"></Icon>
                     我的收藏
                 </MenuItem>
-                <MenuItem name="3">
+                <MenuItem name="comments">
                     <Icon type="bowtie"></Icon>
                     最新评论
-                    &nbsp;<Badge count="10"></Badge>
+                    &nbsp;<Badge :count="unRead" v-if="unRead > 0"></Badge>
+                </MenuItem>
+                <MenuItem name="4">
+                    <Icon type="ios-paw"></Icon>
+                    我的评论
                 </MenuItem>
             </MenuGroup>
             <MenuGroup title="账号管理">
@@ -65,13 +69,21 @@
                     });
                     _this.$Loading.error();
                 },
-                activeName:this.$route.name
+                activeName:this.$route.name,
+                unRead:0
             }
         },
         methods:{
             menu(name) {
                 this.$router.push({
                     name: name
+                });
+            },
+            commentCount(){
+                this.papa.post("users/unRead",{}).then(data => {
+                    this.unRead = data.data;
+                }).catch(err => {
+
                 });
             }
         },
@@ -81,7 +93,7 @@
           }
         },
         mounted(){
-
+            this.commentCount();
         }
     }
 </script>
