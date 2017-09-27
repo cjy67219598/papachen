@@ -7,6 +7,7 @@ import myArticlesList from "../components/user/my-articles-list.vue";
 import detail from "../components/home/detail.vue";
 import collections from "../components/user/collections.vue";
 import comments from "../components/user/comments.vue";
+import myComments from "../components/user/my-comments.vue";
 
 let router = [{
     meta: {
@@ -69,6 +70,13 @@ let router = [{
         path:"comments",
         component:comments,
         name:"comments"
+    },{
+        meta:{
+            auth:true
+        },
+        path:"myComments",
+        component:myComments,
+        name:"myComments"
     }]
 }];
 export default router;

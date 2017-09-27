@@ -1,7 +1,7 @@
 <template>
     <div class="collections">
-        <h1>
-            <Icon type="social-twitch"></Icon>&nbsp;<span>我的收藏</span>
+        <h1 class="common-title">
+            <Icon type="ios-paw"></Icon>&nbsp;<span>我的收藏</span>
         </h1>
         <Input v-model.trim="keywords" icon="search" placeholder="请输入关键字进行搜索" style="margin:0 0 20px 0;" @keydown.native.enter="setKeywords()"></Input>
         <div class="my-articles-list">

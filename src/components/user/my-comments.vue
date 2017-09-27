@@ -1,7 +1,7 @@
 <template>
     <div class="user-comments my-articles-list">
         <h1 class="common-title">
-            <Icon type="bowtie"></Icon>&nbsp;<span>最新评论</span>
+            <Icon type="chatbubble-working"></Icon>&nbsp;<span>我的评论</span>
         </h1>
         <div class="list">
             <Card class="item" v-for="(val,key) in comments.data" :key="key">
@@ -15,6 +15,17 @@
                 <p class="time">
                     <span>{{papa.time(val.createTime,1)}}</span>
                 </p>
+                <div slot="extra">
+                    <Poptip
+                            confirm
+                            title="确定删除?"
+                            @on-ok="del(val._id)"
+                            ok-text="确定"
+                            cancel-text="取消"
+                            placement="left">
+                        <Button type="error">删除</Button>
+                    </Poptip>
+                </div>
             </Card>
         </div>
         <Page :total="comments.page.count" :page-size="search.size" :current="comments.page.page" show-elevator @on-change="setPage" v-if="comments.page.count > search.size"></Page>
@@ -37,15 +48,8 @@
         },
         methods:{
             getComments(){
-                this.papa.post("users/comments",this.search).then(data => {
+                this.papa.post("users/myComments",this.search).then(data => {
                     this.comments = data;
-                }).catch(err => {
-
-                });
-            },
-            read(){
-                this.papa.post("users/read",{}).then(data => {
-                    this.$parent.commentCount();
                 }).catch(err => {
 
                 });
@@ -53,11 +57,20 @@
             setPage(num){
                 this.search.page = num;
                 this.getComments();
+            },
+            del(id){
+                this.papa.post("article/delComment",{
+                    id:id
+                }).then(data => {
+                    this.papa.tip(data);
+                    this.getComments();
+                }).catch(err => {
+
+                });
             }
         },
         mounted(){
             this.getComments();
-            this.read();
         }
     }
 </script>

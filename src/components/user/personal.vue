@@ -26,8 +26,8 @@
                     最新评论
                     &nbsp;<Badge :count="unRead" v-if="unRead > 0"></Badge>
                 </MenuItem>
-                <MenuItem name="4">
-                    <Icon type="ios-paw"></Icon>
+                <MenuItem name="myComments">
+                    <Icon type="chatbubble-working"></Icon>
                     我的评论
                 </MenuItem>
             </MenuGroup>
