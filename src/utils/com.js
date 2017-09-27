@@ -1,4 +1,4 @@
-import empty from "./include/empty.vue";
+import empty from "../components/include/empty.vue";
 
 let arr = [
     empty

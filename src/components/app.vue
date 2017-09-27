@@ -71,15 +71,13 @@
         data() {
             return {
                 activeName: "home",
-                modal1: false,
                 form: {
                     username: "",
                     password: ""
                 },
                 userInfo: {
                     nickname: "",
-                    headImg: "",
-                    isLogin:true
+                    headImg: ""
                 },
                 loading: false,
                 rules: {
@@ -132,8 +130,14 @@
                         data.data.isLogin = true;
                         data.data.headImg && (data.data.headImg += "?_=" + new Date().getTime());
                         this.userInfo = data.data;
+                        this.userInfoStore = data.data;
                     }else{
                         this.userInfo.isLogin = false;
+                        this.userInfoStore = {
+                            nickname: "",
+                            headImg: "",
+                            isLogin:false
+                        };
                         if(this.$route.matched.some(record => record.meta.auth)){
                             this.$router.push({
                                 name:"home"
@@ -143,6 +147,11 @@
                     }
                 }).catch(() => {
                     this.userInfo.isLogin = false;
+                    this.userInfoStore = {
+                        nickname: "",
+                        headImg: "",
+                        isLogin:false
+                    };
                 });
             },
             signOut(){
@@ -164,6 +173,24 @@
                 }).catch(() => {
 
                 });
+            },
+        },
+        computed:{
+            modal1:{
+                get(){
+                    return this.$store.state.loginModal;
+                },
+                set(val){
+                    this.$store.commit("login",val);
+                }
+            },
+            userInfoStore:{
+                get(){
+                    return this.$store.state.userInfoStore;
+                },
+                set(val){
+                    this.$store.commit("setUserInfo",val);
+                }
             }
         },
         mounted() {

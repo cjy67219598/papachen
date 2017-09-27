@@ -4,7 +4,7 @@
 let baseUrl = "/";
 import $ from "jquery";
 import iView from "iview";
-export default {
+let utils = {
     baseUrl,
     post(url,data){
         iView.LoadingBar.start();
@@ -76,5 +76,10 @@ export default {
         let minute = t.getMinutes() < 10 ? "0" + t.getMinutes() : t.getMinutes();
         let second = t.getSeconds() < 10 ? "0" + t.getSeconds() : t.getSeconds();
         if(type === 1) return year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second;
+    }
+};
+export default {
+    install(Vue){
+        Vue.prototype.papa = utils;
     }
 }

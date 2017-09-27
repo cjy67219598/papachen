@@ -5,20 +5,21 @@ import App from "./components/app.vue";
 import routes from "./routes/routes";
 import iView from "iview";
 import bluebird from "bluebird";
-import utils from "./utils";
-import com from "./components/com";
+import utils from "./utils/utils";
+import com from "./utils/com";
+import store from "./store/store";
 window.Promise = bluebird;
 Vue.use(VueRouter);
 Vue.use(iView);
 Vue.use(com);
-Vue.prototype.papa = utils;
+Vue.use(utils);
 let router = new VueRouter({
     routes:routes
 });
 router.beforeEach((to, from, next) => {
-    if(app && to.matched.some(record => record.meta.auth) && !app.$children[0].userInfo.isLogin){
+    if(app && to.matched.some(record => record.meta.auth) && !store.state.userInfo.isLogin){
         next(false);
-        app.$children[0].login();
+        store.commit("login",true);
     }else{
         if(!to.name){
             next({
@@ -39,8 +40,9 @@ router.afterEach(route => {
 let app = new Vue({
     el:"#app",
     router:router,
-    template:"<my-app></my-app>",
+    store:store,
+    template:"<App />",
     components: {
-        "my-app":App
+        "App":App
     }
 });
