@@ -32,13 +32,9 @@
                 </MenuItem>
             </MenuGroup>
             <MenuGroup title="账号管理">
-                <MenuItem name="4">
+                <MenuItem name="account">
                     <Icon type="settings"></Icon>
                     安全中心
-                </MenuItem>
-                <MenuItem name="5">
-                    <Icon type="heart"></Icon>
-                    个人信息
                 </MenuItem>
             </MenuGroup>
         </Menu>
